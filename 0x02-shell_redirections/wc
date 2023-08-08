@@ -1,0 +1,5 @@
+root:x:0:0:root:/root:/bin/bash
+bin:x:2:2:bin:/bin:/usr/sbin/nologin
+sync:x:4:65534:sync:/bin:/bin/sync
+proxy:x:13:13:proxy:/bin:/usr/sbin/nologin
+erickvenom99:x:1000:1000:,,,:/home/erickvenom99:/bin/bash
