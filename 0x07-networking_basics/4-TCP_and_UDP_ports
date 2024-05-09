@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 # display listening ports
-ss -tunlp | grep LISTEN
+# also only shows listening sockets and
+# PID and name of the program to which each socket belongs
+netstat -l -p

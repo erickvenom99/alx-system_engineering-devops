@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
-# check if ip is provide
+# pings an IP address passed as an argument
+# Displays Usage:5-is_the_host_on_the_network {IP_ADDRESS} if no argument passed
+# Ping the IP 5 times
 if [ "$#" -ne 1 ]; then
     echo "Usage: $0 {IP_ADDRESS}"
         exit 1
-	fi
+fi
 
-# Ping provided IP address 5 times
 ping -c 5 "$1"
