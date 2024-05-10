@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+if [[ $EUID -ne 0 ]]; then
+   echo "This script must be run as root"
+      exit 1
+      fi
+
+sed -i '/localhost/d' /etc/hosts
+echo "127.0.0.2 localhost" >> /etc/hosts
+
+apt-get update
+apt-get install -y dnsmasq
+
+echo "address=/facebook.com/8.8.8.8" > /etc/dnsmasq.d/facebook.conf
+
+systemctl restart dnsmasq
+
+
+echo "Current /etc/hosts:"
+cat /etc/hosts
+echo "Current dnsmasq configuration for facebook.com:"
+cat /etc/dnsmasq.d/facebook.conf
