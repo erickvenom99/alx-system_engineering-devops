@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Set the port number
+# Use netcat to listen on the specified port and echo any input
+PORT=98
+while true; do
+  nc -l -p $PORT -q 1
+done
