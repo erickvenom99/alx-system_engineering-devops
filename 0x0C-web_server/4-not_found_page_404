@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-# Configures a new Ubuntu machine by installing Nginx,
-#+ which should listen on port 80.
+# Configures a new ubuntu machine by installing
+# Nginx wherult
+
 
 echo -e "Updating and installing Nginx.\n"
 sudo apt-get update -y -qq && \
@@ -27,7 +28,9 @@ sudo sed -i '24i\rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlw
 
 # 404 page
 echo "Ceci n'est pas une page" >> /var/www/html/error_404.html
-sudo sed -i '21i\       error_page 404 /error_404.html;' /etc/nginx/sites-available/defa
+sudo sed -i '25i\error_page 404 /error_404.html;' /etc/nginx/sites-available/defa
 
 # Restarting nginx
 sudo service nginx restart
+
+echo -e "\nCompleted.\n"
