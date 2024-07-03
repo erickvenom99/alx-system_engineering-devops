@@ -1,28 +1,28 @@
 #!/usr/bin/env bash
-# Installs Nginx with the following configurations:
-#+    Listens on port 80.
-#+    Returns a page containing "Hello World!" when queried
-#++    at the root with a curl GET request.
+#+ Configures a new Ubuntu machine by installing Nginx, 
+#+ which should listen on port 80.
 
-#  updates the package lists for available software packages.
-apt-get update
-# installs the Nginx web server.
-apt-get install -y nginx
+echo -e "Updating and installing Nginx.\n"
+sudo apt-get update -y -qq && \
+sudo apt-get install nginx -y
 
-# Creates the /etc/nginx/html directory, which will serve as the document root directory for Nginx.
-mkdir /etc/nginx/html
-#  creates an empty index.html file inside the /etc/nginx/html directory.
-touch /etc/nginx/html/index.html
-#  sets the content of the index.html file to "Hello World!" using the echo command.
-echo "Hello World!" > /etc/nginx/html/index.html
-# Sets Nginx to listen on port 80 and serve files from the /etc/nginx/html directory.
-printf %s "server {
-     listen      80;
-     listen      [::]:80 default_server;
-     root        /etc/nginx/html;
-     index       index.html index.htm;
-}
-" > /etc/nginx/sites-available/default
+# Starting Nginx
+sudo service nginx start
 
-# Restarts the Nginx service to apply the configuration changes.
-service nginx restart
+# Allowing Nginx to pass through the firewall
+sudo ufw allow 'Nginx HTTP'
+
+# Give ownership of web files to the user
+sudo chown -R "$USER":"$USER" /var/www/html
+sudo chmod -R 755 /var/www
+
+# Back up the default index
+cp /var/www/html/index.nginx-debian.html /var/www/html/index.nginx-debian.html.bckp
+
+# Create a new index
+echo -e "Hello World!" | dd status=none of=/var/www/html/index.nginx-debian.html
+
+# Restart Nginx
+sudo service nginx restart
+
+echo -e "\nCompleted.\n"
