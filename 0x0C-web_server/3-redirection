@@ -1,12 +1,16 @@
 #!/usr/bin/env bash
-# Configures a new Ubuntu machine by installing Nginx, which should listen on port 80.
+# Configures a new Ubuntu machine by installing Nginx,
+#+ which should listen on port 80.
 
 echo -e "Updating and installing Nginx.\n"
 sudo apt-get update -y -qq && \
 sudo apt-get install nginx -y
 
-# Starting Nginx
+# starting nginx service
 sudo service nginx start
+
+#let nginx through the firewall
+sudo ufw allow 'Nginx HTTP'
 
 # Adjust permissions
 sudo chown -R "$USER":"$USER" /var/www/html
