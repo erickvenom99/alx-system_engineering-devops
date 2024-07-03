@@ -1,30 +1,29 @@
 #!/usr/bin/env bash
-# Configures a new ubuntu machine by installing
-# Nginx where it should be listening on port 80
+# Configures a new Ubuntu machine by installing Nginx, which should listen on port 80.
 
-echo -e "Update and installing Nginx.\n"
+echo -e "Updating and installing Nginx.\n"
 sudo apt-get update -y -qq && \
-         sudo apt-get install nginx -y
+sudo apt-get install nginx -y
 
-echo -e "\nSetting up some supporting files.\n"
+echo -e "\nSetting up some minor stuff.\n"
 
-# starting nginx
+# Starting Nginx
 sudo service nginx start
 
-# allowing nginx pass firewall
+# Allowing Nginx to pass through the firewall
 sudo ufw allow 'Nginx HTTP'
 
-# Give ownership of webfiles to user
+# Give ownership of web files to the user
 sudo chown -R "$USER":"$USER" /var/www/html
 sudo chmod -R 755 /var/www
 
-# Backup default index
+# Back up the default index
 cp /var/www/html/index.nginx-debian.html /var/www/html/index.nginx-debian.html.bckp
 
-# Creating new index
+# Create a new index
 echo -e "Hello World!" | dd status=none of=/var/www/html/index.nginx-debian.html
 
-# Restarting nginx
+# Restart Nginx
 sudo service nginx restart
 
-echo -e "\nCompleted.\n"
+echo -e "\nCompleted. ✅\n"
