@@ -1,32 +1,33 @@
 #!/usr/bin/env bash
-# Configures a new ubuntu machine by installing
-# Nginx where it should be listening on port 80
+# Configures a new Ubuntu machine by installing Nginx,
+#+ which should listen on port 80.
 
-
-echo -e "Update and installing Nginx.\n"
+echo -e "Updating and installing Nginx.\n"
 sudo apt-get update -y -qq && \
 sudo apt-get install nginx -y
 
-# starting nginx
+# starting nginx service
 sudo service nginx start
 
+#let nginx through the firewall
+sudo ufw allow 'Nginx HTTP'
 
+# Adjust permissions
 sudo chown -R "$USER":"$USER" /var/www/html
 sudo chmod -R 755 /var/www
 
+# Back up the default index file
 cp /var/www/html/index.nginx-debian.html /var/www/html/index.nginx-debian.html.bckp
 
-# Creat new index  page
+# Create a new index
 echo -e "Hello World!" | dd status=none of=/var/www/html/index.nginx-debian.html
 
-# Setting up /redirect_me to a youtube video
-sudo sed -i '20i\       rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;' /etc/nginx/sites-available/default
+# Set up /redirect_me to a YouTube video
+sudo sed -i '24i\rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;' /etc/nginx/sites-available/default
 
 # 404 page
 echo "Ceci n'est pas une page" >> /var/www/html/error_404.html
 sudo sed -i '21i\       error_page 404 /error_404.html;' /etc/nginx/sites-available/defa
-
-
 
 # Restarting nginx
 sudo service nginx restart
