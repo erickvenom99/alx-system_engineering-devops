@@ -11,10 +11,14 @@ echo -e "\nSetting up some supporting files.\n"
 # starting nginx
 sudo service nginx start
 
+# allowing nginx pass firewall
+sudo ufw allow 'Nginx HTTP'
+
 # Give ownership of webfiles to user
 sudo chown -R "$USER":"$USER" /var/www/html
 sudo chmod -R 755 /var/www
 
+# Backup default index
 cp /var/www/html/index.nginx-debian.html /var/www/html/index.nginx-debian.html.bckp
 
 # Creating new index
