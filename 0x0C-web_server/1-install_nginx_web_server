@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# Configures a new ubuntu machine by installing
+# Nginx where it should be listening on port 80
+
+echo -e "Update and installing Nginx.\n"
+sudo apt-get update -y -qq && \
+sudo apt-get install nginx -y
+
+# starting nginx
+sudo service nginx start
+
+sudo chown -R "$USER":"$USER" /var/www/html
+sudo chmod -R 755 /var/www
+
+cp /var/www/html/index.nginx-debian.html /var/www/html/index.nginx-debian.html.bckp
+
+# Creating new index
+echo -e "Hello World!" | dd status=none of=/var/www/html/index.nginx-debian.html
+
+# Restarting nginx
+sudo service nginx restart
