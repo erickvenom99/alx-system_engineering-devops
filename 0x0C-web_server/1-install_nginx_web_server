@@ -4,11 +4,14 @@
 
 echo -e "Update and installing Nginx.\n"
 sudo apt-get update -y -qq && \
-sudo apt-get install nginx -y
+         sudo apt-get install nginx -y
+
+echo -e "\nSetting up some supporting files.\n"
 
 # starting nginx
 sudo service nginx start
 
+# Give ownership of webfiles to user
 sudo chown -R "$USER":"$USER" /var/www/html
 sudo chmod -R 755 /var/www
 
@@ -19,3 +22,5 @@ echo -e "Hello World!" | dd status=none of=/var/www/html/index.nginx-debian.html
 
 # Restarting nginx
 sudo service nginx restart
+
+echo -e "\nCompleted.\n"
