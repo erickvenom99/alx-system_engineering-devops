@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# Configures a new Ubuntu machine by installing Nginx, which should listen on port 80.
+
+echo -e "Updating and installing Nginx.\n"
+sudo apt-get update -y -qq && \
+sudo apt-get install nginx -y
+
+# Starting Nginx
+sudo service nginx start
+
+# Adjust permissions
+sudo chown -R "$USER":"$USER" /var/www/html
+sudo chmod -R 755 /var/www
+
+# Back up the default index file
+cp /var/www/html/index.nginx-debian.html /var/www/html/index.nginx-debian.html.bckp
+
+# Create a new index
+echo -e "Hello World!" | dd status=none of=/var/www/html/index.nginx-debian.html
+
+# Set up /redirect_me to a YouTube video
+sudo sed -i '24i\       rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;' /etc/nginx/sites-available/default
+
+# Restart Nginx
+sudo service nginx restart
