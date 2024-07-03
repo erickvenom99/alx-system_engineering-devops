@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 # Configures a new ubuntu machine by installing
-# Nginx where it should be listening on port 80
-# Serve a page that would return a Hello World string
-#
+#+ Nginx where it should be listening on port 80
+
 
 echo -e "Updating and installing Nginx.\n"
 sudo apt-get update -y -qq && \
@@ -25,6 +24,15 @@ cp /var/www/html/index.nginx-debian.html /var/www/html/index.nginx-debian.html.b
 
 # Creating new index
 echo -e "Hello World!" | dd status=none of=/var/www/html/index.nginx-debian.html
+
+# Nginx to listen on port 80 and serve files from the /etc/nginx/html directory
+printf %s "server {
+     listen      80;
+     listen      [::]:80 default_server;
+     root        /etc/nginx/html;
+     index       index.html index.htm;
+}
+" > /etc/nginx/sites-available/default
 
 # Restarting nginx
 sudo service nginx restart
