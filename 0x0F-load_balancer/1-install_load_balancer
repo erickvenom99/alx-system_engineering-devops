@@ -1,4 +1,4 @@
-!/usr/bin/env bash
+#!/usr/bin/env bash
 # Use a load balancer
 
 sudo apt-get update -y
