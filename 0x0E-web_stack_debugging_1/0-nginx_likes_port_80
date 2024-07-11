@@ -8,8 +8,8 @@ if ! grep -q "listen to port 80;" /etc/nginx/sites-enabled/default; then
     awk '/^server {/,/^listen \[::\]:80 default_server;/ { if ($0 ~ /^ *listen [[:digit:]]+ default_server;/) print "        listen 80 default_server;"; else print; next } 1' /etc/nginx/sites-enabled/default > /tmp/default.tmp && sudo mv /tmp/default.tmp /etc/nginx/sites-enabled/default
 fi
 
-# Check if port 80 is been used by another webserver
-if lsof -i :80 | grep -q LISTEN; then
+# Check if another web server like is using the port 80
+if sudo netstat -tuln | grep -q ":80"; then
     echo "Error: Port 80 is been used by another webserver"
     # Stop services
     sudo systemctl stop apache2
