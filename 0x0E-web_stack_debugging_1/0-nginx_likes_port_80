@@ -1,32 +1,4 @@
 #!/usr/bin/env bash
-
-# Listen to port 80;
-if ! grep -q "listen to port 80;" /etc/nginx/sites-enabled/default; then
-    echo "Error: Defualt server is unavailable or misconfigured in /etc/nginx/sites-enabled/default"
-    # Add or replace the line that binds port 80 to all IPv4 addresses
-    echo "Reconfiguring to bind port 80 to IPv4 addresses and updating..."
-    awk '/^server {/,/^listen \[::\]:80 default_server;/ { if ($0 ~ /^ *listen [[:digit:]]+ default_server;/) print "        listen 80 default_server;"; else print; next } 1' /etc/nginx/sites-enabled/default > /tmp/default.tmp && sudo mv /tmp/default.tmp /etc/nginx/sites-enabled/default
-fi
-
-# Check if another web server like is using the port 80
-if sudo netstat -tuln | grep -q ":80"; then
-    echo "Error: Port 80 is been used by another webserver"
-    # Stop services
-    sudo systemctl stop apache2
-fi
-
-# Check Nginx
-if ! sudo nginx -t -c /etc/nginx/nginx.conf &> /dev/null; then
-    echo "Error: Nginx is not run with root user"
-    # start Nginx with sudo privileges
-    echo "Restarting Nginx with root user privillege..."
-    sudo systemctl restart nginx
-fi
-
-# Check  firewall configuration 
-if sudo ufw status | grep -q "80/tcp"; then
-    echo "Error: ufw firewall is blocking Nginx from binding to port 80"
-    # Enable incoming traffic on port 80
-    echo "enable on port 80..."
-    sudo ufw allow 80/tcp
-fi
+#Troubleshoot port 80
+cat /etc/nginx/sites-available/default > /etc/nginx/sites-available/default
+sudo systemctl restart nginx
