@@ -9,9 +9,9 @@ cat << EOF | sudo tee -a /etc/haproxy/haproxy.cfg
 frontend osenoye
     bind *:80
     mode http
-    default_backend app
+    default_backend osenoye-backend
 
-backend app
+backend osenoye-backend
     balance roundrobin
     server 443371-web-01 54.224.41.162:80 check
     server 443371-web-02 54.167.91.167:80 check

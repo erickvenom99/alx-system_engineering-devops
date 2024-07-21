@@ -1,0 +1,3 @@
+#!/bin/bash
+# Connect to the server using the private key
+ssh -i ubuntu@54.224.41.162
