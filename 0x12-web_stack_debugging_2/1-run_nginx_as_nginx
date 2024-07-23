@@ -8,8 +8,6 @@ sudo chmod 644 /etc/nginx/nginx.conf
 #change ownership of nginx directories and files
 sudo chown -R nginx:nginx /etc/nginx/
 #Check and kill other services of port 8080
-for pid in $(lsof -t -i:8080); do
-    kill "$pid"
-done
+pkill apache2
 #restart nginx
-sudo -u nginx service nginx start
+sudo -u nginx service nginx restart
