@@ -1,12 +1,10 @@
 #!/usr/bin/env bash
+#set the user to nginx
+sudo sed -i 's/user www-data/user nginx/g' /etc/nginx/nginx.conf
 #configure /etc/nginx/sites-enabled/default to listen to port 8080
 sudo sed -i 's/listen 80/listen 8080/g' /etc/nginx/sites-enabled/default
-#set the user to nginx
-sudo sed -i 's/#user www-data/user nginx/g' /etc/nginx/nginx.conf
 #change permission of etc/nginx/nginx.conf
 sudo chmod 644 /etc/nginx/nginx.conf
-#change ownership of nginx directories and files
-sudo chown -R nginx:nginx /etc/nginx/
 #Check and kill other services of port 8080
 pkill apache2
 #restart nginx
