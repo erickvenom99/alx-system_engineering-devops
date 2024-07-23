@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Ensure script run with an arguement
+if [ $# -ne 1 ]; then
+    echo "Usage: $0 <username>"
+    exit 1
+fi
+# Run the whoami command
+sudo -u "$1" whoami
