@@ -15,10 +15,6 @@ if __name__ == "__main__":
         unique_ids.add(user.get('userId'))
         
     export = {}
-
-    for user in user_data:
-        ids.add(user.get('userId'))
-
     for user in unique_ids:
         req = requests.get(api_url + 'users/{}'.format(user))
         username = req.json().get('username')
