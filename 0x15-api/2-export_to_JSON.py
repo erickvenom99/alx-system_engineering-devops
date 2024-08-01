@@ -25,16 +25,16 @@ if __name__ == "__main__":
     todos_data = todos_response.json()
 
     # Prepare the data for JSON export
-    json_data = {
-        user_id: [
+    json_data = {}
+    json_data["{}".format(user_id)] = []
+    for task in todos_data:
+        json_data["{}".format(user_id)].append(
             {
                 "task": task.get("title"),
                 "completed": task.get("completed"),
                 "username": username
-            }
-            for task in todos_data
-        ]
-    }
+            })
+
     # Write the JSON data to a file
     with open(f"{user_id}.json", "w") as json_file:
         json.dump(json_data, json_file, indent=4)
