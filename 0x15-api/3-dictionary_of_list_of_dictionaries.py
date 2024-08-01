@@ -22,13 +22,13 @@ if __name__ == "__main__":
         res = requests.get(api_url + 'todos?userId={}'.format(user))
         todos_data = res.json()
 
-    export['{}'.format(user)] = []
-    for task in rqdata:
-        export['{}'.format(user)].append({
-            'task': task.get('title'),
-            'completed': task.get('completed'),
-            'username': username
-            })
+        export['{}'.format(user)] = []
+        for task in todos_data:
+            export['{}'.format(user)].append({
+                'task': task.get('title'),
+                'completed': task.get('completed'),
+                'username': username
+                })
 
     with open('todo_all_employees.json', 'w') as outfile:
         json.dump({int(v): export[v] for v in export.keys()}, outfile,
