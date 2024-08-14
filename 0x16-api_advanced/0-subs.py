@@ -11,16 +11,12 @@ import requests
 def number_of_subscribers(subreddit):
     """Query reddit API
     """
-    try:
-        res = requests.get(
+    res = requests.get(
             f'https://www.reddit.com/r/{subreddit}/about.json',
             headers={'User-Agent': 'custom'},
             allow_redirects=False
         )
-        if res.status_code == 200:
-            data = res.json()
-            return data.get('data', {}).get('subscribers', 0)
-        else:
-            return 0
-    except requests.RequestException:
+    if res.status_code == 200:
+        return res.json().get('data').get('subscribers')
+    else:
         return 0
