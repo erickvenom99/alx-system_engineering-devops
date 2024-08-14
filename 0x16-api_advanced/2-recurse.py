@@ -13,7 +13,7 @@ def recurse(subreddit, hot_list=[], after=""):
     for a given subreddit.
     """
     reddit = "https://www.reddit.com/"
-    header = {'user-agent': 'my-app/0.0.1'}
+    header = {'user-agent': 'custom'}
     if after is None:
         return hot_list
 
