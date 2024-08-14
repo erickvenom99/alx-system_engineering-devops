@@ -10,7 +10,7 @@ def top_ten(subreddit):
     """Prints the tifles of the first 10
        hot posts
     """
-    url = "https://www.reddit.com/r/{s}/hot.json?limit=10".format(subreddit)
+    url = "https://www.reddit.com/r/{}/hot.json?limit=10".format(subreddit)
     headers = {'User-Agent': 'custom'}
 
     try:
