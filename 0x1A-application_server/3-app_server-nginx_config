@@ -1,7 +1,6 @@
 server {
-    listen 80 default_server;
+    listen 80;
     listen [::]:80 default_server;
-
     server_name 54.224.41.162;
 
     add_header X-Served-By $HOSTNAME;
@@ -17,17 +16,16 @@ server {
         internal;
     }
 
-    location /hbnb_static { 
-        alias /data/web_static/current/; 
+    location /hbnb_static {
+        alias /data/web_static/current/;
     }
 
-    location ~ ^/airbnb-dynamic/number_odd_or_even(\d+)$ {
-        set $num $1;
-        proxy_pass http://0.0.0.0:5001/number_odd_or_even/$num;
+    # Corrected dynamic URL location block
+    location ~ ^/airbnb-dynamic/number_odd_or_even/([0-9]+)$ {
+        proxy_pass http://0.0.0.0:5001/number_odd_or_even/$1;
     }
 
     location = /airbnb-onepage {
         proxy_pass http://0.0.0.0:5000/airbnb-onepage;
     }
 }
-
